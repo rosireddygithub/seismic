@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Seismic Disturbance Dashboard</title>
+    <script>
+        function fetchStatus() {
+            fetch('/status').then(res => res.json()).then(data => {
+                for (const location in data) {
+                    const container = document.getElementById(location);
+                    const entries = data[location];
+                    if (entries.length === 0) {
+                        container.innerHTML = "<em>No recent disturbances</em>";
+                    } else {
+                        container.innerHTML = entries.map(entry => `<div>${entry}</div>`).join('');
+                    }
+                }
+            });
+        }
+        setInterval(fetchStatus, 1000); // update every second
+    </script>
+</head>
+<body>
+    <h1>Seismic Disturbance Dashboard</h1>
+
+    <h2>Hyderabad</h2>
+    <div id="Hyderabad"><em>Waiting for data...</em></div>
+
+    <h2>Chennai</h2>
+    <div id="Chennai"><em>Waiting for data...</em></div>
+
+    <h2>Durgapur</h2>
+    <div id="Durgapur"><em>Waiting for data...</em></div>
+</body>
+</html>
